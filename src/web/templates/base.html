@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {% if title %}
+    <title>{{title}} - Monaco</title>
+    {% else %}
+    <title>Monaco</title>
+    {% endif %}
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.9.0/css/selectize.bootstrap3.css" rel="stylesheet">
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/vis/3.12.0/vis.min.css" rel="stylesheet">
+    <link href="/static/css/base.css" rel="stylesheet">
+    <link rel="shortcut icon" href="/static/images/favicon.ico">
+    {% block style %}{% endblock %}
+  </head>
+  <body>
+    <div id="wrap">
+      {% block modal %}{% endblock %}
+      <nav>
+      <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <ul class="nav navbar-nav navbar-left">
+          <li class="navbar-header">
+            <a class="navbar-brand" href="/">Monaco</a>
+          </li>
+          {% block topnav %}{% endblock %}
+        </ul>
+      </div>
+      <div class="navbar-default sidebar" role="navigation">
+        <div class="sidebar-nav navbar-colllapse">
+          <ul class="nav" id="side-menu">
+          {% block sidenav %}{% endblock %}
+          </ul>
+        </div>
+      </div>
+      </nav>
+      <div id="page-wrap">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="main">
+              {% block main %}{% endblock %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="footer">
+      <div class="container">
+        <div class="overlay"></div>
+        <div class="monaco-footer">
+          <!-- Best css practices -->
+          <p class="text-muted" style="position:absolute;bottom:0;left:0;margin:0;">Monaco</p>
+          <p class="text-muted" style="position:absolute;bottom:0;right:0;margin:0;">Hulu</p>
+        </div>
+      </div>
+    </div>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.9.0/js/standalone/selectize.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/1.4.11/jquery.scrollTo.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/vis/3.12.0/vis.min.js"></script>
+    {% block script %}{% endblock %}
+  </body>
+</html>

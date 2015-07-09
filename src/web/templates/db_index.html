@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block style %}
+   <link href="/static/css/index.css" rel="stylesheet">
+{% endblock %}
+{% block sidenav %}
+<li>
+  <a href="">DBs</a>
+  <ul class="nav nav-second-level" id="db-submenu">
+    <!--<li>
+      <ul class="nav nav-third-level" id="db-listmenu">
+        <li>
+          <a href="javascript:void(0);" id="list-owner">Mine</a>
+        </li>
+        <li>
+          <a href="javascript:void(0);" id="list-operator" class="active">Operator</a>
+        </li>
+        <li>
+          <a href="javascript:void(0);" id="list-all">All</a>
+        </li>
+      </ul>
+    </li>-->
+    <li>
+      <a href="javascript:void(0);" data-toggle="modal" data-target="#create_modal">Create</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="/proxies">Proxies</a>
+</li>
+<li>
+  <a href="/admin">Admin</a>
+</li>
+{% endblock %}
+{% block modal %}
+  {% include "create_db_modal.html" %}
+{% endblock %}
+{% block main %}
+<div id='listloading' class='spinner'>
+  <img src='/static/images/spinner.gif' class='spinner'>
+</div>
+<div id='listcontent' style="display: none">
+  <table class="table table-hover">
+    <thead>
+      <th>Name</th>
+      <th>Exposure</th>
+      <th class="text-center">Memory Usage</th>
+      <th class="text-center">RPS</th>
+    </thead>
+    <tbody id='monaco-list'></tbody>
+  </table>
+</div>
+{% endblock %}
+{% block script %}
+<script src="/static/js/create_db.js"></script>
+<script src='/static/js/list_dbs.js'></script>
+{% endblock %}

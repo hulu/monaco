@@ -1,0 +1,72 @@
+<!-- A stub that injects the pop-up style update dialogue -->
+<div class="modal fade" id="update_modal" tabindex="-1" role="dialog" aria-labelledby="update_modal_label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="update_modal_label">Update Settings: {{ name }}</h4>
+      </div>
+      <div class="modal-body">
+        <form action="#" role="form" id="update_form">
+          <div class="form-group">
+            <label for="app_name">Proxy Name</label>
+            <input type="text" name="name" class="form-control" id="name" value="{{ name }}">
+          </div>
+          <div class="form-group">
+            <label for="twem_id">Proxy ID</label>
+            <input type="text" name="twem_id" class="form-control" id="twem_id" value="{{ twem_id }}" readonly>
+          </div>
+          <div class="form-group">
+            <label for="distribution">Distribution Method</label>
+            <select name="distribution" class="form-control" id="distribution">
+            {%- for dist in config['MONACO_PROXY_DISTRIBUTIONS'] %}
+            {%- if dist == distribution %}
+              <option value="{{ dist }}" selected>{{ dist }}</option>
+            {% else %}
+              <option value="{{ dist }}">{{ dist }}</option>
+            {% endif -%}
+            {% endfor -%}
+            </select>
+            <p class="help-block">Note: If you have a single server selected, random will be used regardless of this setting</p>
+          </div>
+          <div class="form-group">
+            <label for="servers">DBs</label>
+            <select name="servers" class="form-control" id="servers" multiple>
+            {%- for app_id in all_servers %}
+            {%- if app_id in servers %}
+              <option value="{{ app_id }}" selected>{{ app_id }}</option>
+            {% else %}
+              <option value="{{ app_id }}">{{ app_id }}</option>
+            {% endif -%}
+            {% endfor -%}
+            </select>
+            <p class="help-block">The Monaco DB(s) that will be proxied (ID/port number). If one is selected, the proxy will be configured to point to the master server as well as the slave replicas of that DB. If multipleare entered, the master server alone will be used from each DB given. This is can be used for sharding a dataset.</p>
+
+          </div>
+          <div class="form-group">
+            <label for="extservers">External Servers</label>
+            <select name="extservers" class="form-control" id="extservers" multiple>
+            {%- for extserver in extservers %}
+              <option value="{{extserver}}" selected>{{extserver}}</option>
+            {% endfor -%}
+            </select>
+            <p class="help-block">This can only be selected with multi-master configurations (having more than one DB above). This allows adding external servers as backends in your config. Must be IP:PORT, or FQDN:PORT
+          </div>
+
+          <div class="form-group">
+            <label for="owner">Owner</label>
+            <input type="text" name="owner" class="form-control" id="owner" value="{{ owner }}">
+          </div>
+          <div class="form-group">
+            <label for="operator">Operator</label>
+            <input type="text" name="operator" class="form-control" id="operator" value="{{ operator }}">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="update_button">Update</button>
+      </div>
+    </div>
+  </div>
+</div>

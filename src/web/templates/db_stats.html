@@ -1,0 +1,31 @@
+<!-- Graphite-sourced metrics stub for dbs -->
+<div class="row" id="graphdiv">
+<!-- Used Memory  -->
+  <div class='col-xs-12 col-xl-6' id='memgraph'>
+    <a href='http://devops-graphite.prod.hulu.com/composer/?width=1024&height=600&target=*{{memory_target}}'>
+      <img src='http://devops-graphite.prod.hulu.com/render/?width=1024&height=600&template=plain&title=Used%20Memory&target=*{{memory_target}}&vtitle=bytes&yUnitSystem=binary' class='img-responsive graph-img'/>
+    </a>
+  </div>
+
+<!-- Ops/sec  -->
+  <div class='col-xs-12 col-xl-6' id='rpsgraph'>
+    <a href='http://devops-graphite.prod.hulu.com/composer/?width=1024&height=600&target=*{{rps_target}}'>
+      <img src='http://devops-graphite.prod.hulu.com/render/?width=1024&height=600&template=plain&title=Instantaneous%20Operations&target=*{{rps_target}}&vtitle=rps' class='img-responsive graph-img'/>
+    </a>
+  </div>
+
+<!-- Connections  -->
+  <div class='col-xs-12 col-xl-6' id='congraph'>
+    <a href='http://devops-graphite.prod.hulu.com/composer/?width=1024&height=600&target=*{{conn_target}}'>
+      <img src='http://devops-graphite.prod.hulu.com/render/?width=1024&height=600&template=plain&title=Connections&target=*{{conn_target}}' class='img-responsive graph-img'/>
+    </a>
+  </div>
+</div>
+
+<!-- CPU% per sec  -->
+  <div class='col-xs-12 col-xl-6' id='cpugraph'>
+    <a href='http://devops-graphite.prod.hulu.com/composer/?width=1024&height=600&target=*{{cpu_target}}'>
+      <img src='http://devops-graphite.prod.hulu.com/render/?width=1024&height=600&template=plain&title=CPU%20Percent&target=*{{cpu_target}}' class='img-responsive graph-img'/>
+    </a>
+  </div>
+</div>

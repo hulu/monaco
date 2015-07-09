@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block style %}
+   <link href="/static/css/index.css" rel="stylesheet">
+{% endblock %}
+{% block sidenav %}
+<li>
+  <a href="/">DBs</a>
+</li>
+<li>
+  <a href="">Proxies</a>
+  <ul class="nav nav-second-level" id="proxy-submenu">
+    <!--<li>
+      <ul class="nav nav-third-level" id="proxy-listmenu">
+        <li>
+          <a href="" id="list-owner">Mine</a>
+        </li>
+        <li>
+          <a href="" id="list-operator" class="active">Operator</a>
+        </li>
+        <li>
+          <a href="" id="list-all">All</a>
+        </li>
+      </ul>
+    </li>-->
+    <li>
+      <a href="" data-toggle="modal" data-target="#create_modal">Create</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="/admin">Admin</a>
+</li>
+{% endblock %}
+{% block modal %}
+  {% include "create_proxy_modal.html" %}
+{% endblock %}
+{% block main %}
+<div id='listloading' class='spinner'>
+  <img src='/static/images/spinner.gif' class='spinner'>
+</div>
+<div id='listcontent' style="display: none">
+  <table class="table table-hover">
+    <thead>
+      <th>Name</th>
+      <th>LB IP/Port</th>
+      <th class="text-center">DBs</th>
+    </thead>
+    <tbody id='proxy-list'></tbody>
+  </table>
+</div>
+{% endblock %}
+{% block script %}
+<script src="/static/js/create_proxy.js"></script>
+<script src='/static/js/list_proxies.js'></script>
+{% endblock %}

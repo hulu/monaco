@@ -1,0 +1,13 @@
+redis==2.10.1
+hiredis==0.1.4
+Jinja2==2.7.3
+apscheduler==2.1.2
+pyzmq==14.3.1
+requests==2.2.1
+psutil==2.1.1
+Flask==0.10.1
+flask_exception_emails==0.1.43
+hpc==0.2.658
+pyyaml==3.11
+mock==1.0.1
+--extra-index-url https://pypi.prod.hulu.com/simple

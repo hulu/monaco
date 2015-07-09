@@ -1,0 +1,43 @@
+#!/bin/bash
+set -e
+# TODO: check user exists
+adduser --system --group monaco
+# Python package requirements
+pip install -r /usr/monaco/requirements.txt
+# Permissions
+
+# Redis DB configs
+chmod -R 775 /etc/redis.d
+chown -R monaco /etc/redis.d
+chgrp -R monaco /etc/redis.d
+# For twemproxies (if twemproxy is installed)
+mkdir -p /etc/nutcracker
+chmod 775 /etc/nutcracker
+chown monaco /etc/nutcracker
+chgrp monaco /etc/nutcracker
+
+# Monaco config dir
+chmod 775 /etc/monaco
+chown -R monaco /etc/monaco
+chgrp -R monaco /etc/monaco
+chmod 644 /etc/monaco/monaco.conf
+# Monaco log dir
+chmod 775 /var/log/monaco
+chown monaco /var/log/monaco
+chgrp monaco /var/log/monaco
+# Monaco source dir
+find /usr/monaco -type f -exec chmod 664 {} +
+find /usr/monaco -type d -exec chmod 775 {} +
+chown -R monaco /usr/monaco
+chgrp -R monaco /usr/monaco
+# Monaco init scripts
+chmod 775 /etc/init/monaco.conf
+chmod 775 /etc/init/monaco-db.conf
+chmod 755 /etc/init/monaco-stats.conf
+chmod 775 /etc/init/monaco-web.conf
+chmod 775 /etc/init/nutcracker.conf
+# Monaco dependencies
+# Sudo is such a diva
+chown root /etc/sudoers.d/monaco
+chgrp root /etc/sudoers.d/monaco
+chmod 440 /etc/sudoers.d/monaco

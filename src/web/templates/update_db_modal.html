@@ -1,0 +1,97 @@
+<!-- A stub that injects the pop-up style update dialogue -->
+<div class="modal fade" id="update_modal" tabindex="-1" role="dialog" aria-labelledby="update_modal_label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="update_modal_label">Update Settings: {{ name }}</h4>
+      </div>
+      <div class="modal-body">
+        <form action="/app/{{ app_id }}" method="post" role="form" id="update_form">
+          <div class="form-group">
+            <label for="app_name">App Name</label>
+            <input type="text" name="name" class="form-control" id="name" value="{{ name }}">
+          </div>
+          <div class="form-group">
+            <label for="app_id">App ID</label>
+            <input type="text" name="app_id" class="form-control" id="app_id" value="{{ app_id }}" readonly>
+          </div>
+          <div class="form-group">
+            <label for="maxmemory">Size</label>
+            <select name="maxmemory" class="form-control" id="maxmemory">
+            {%- for size, value in config['MONACO_MAXMEMORY_OPTIONS'].iteritems() %}
+            {%- if value|string() == maxmemory %}
+              <option value="{{ maxmemory }}" selected>{{ size }}</option>
+            {% else %}
+              <option value="{{ value }}">{{ size }}</option>
+            {% endif -%}
+            {% endfor -%}
+            {%- if not maxmemory|int() in config['MONACO_MAXMEMORY_OPTIONS'].values() %}
+              <option value="{{ maxmemory }}" selected>{{ maxmemory }}</option>
+            {% endif %}
+            </select>
+            <p class="help-block">NOTE: Decreasing your maxmemory will restart your redis server</p>
+          </div>
+          <div class="form-group">
+            <label for="mm_policy">Memory Policy</label>
+            <select name="maxmemory_policy" class="form-control" id="maxmemory_policy">
+            {%- for policy in config['MONACO_MAXMEMORY_POLICY_OPTIONS'] %}
+            {%- if policy == maxmemory_policy %}
+              <option value="{{ policy }}" selected>{{ policy }}</option>
+            {% else %}
+              <option value="{{ policy }}">{{ policy }}</option>
+            {% endif -%}
+            {% endfor -%}
+            </select>
+            <p class="help-block">For more info on memory policies, see the commented <a href="http://download.redis.io/redis-stable/redis.conf">redis.conf</a></p>
+          </div>
+          <div class="checkbox">
+            <label>
+            {%- if persist %}
+              <input type="checkbox" name="persist" value="persist" checked="checked"> Persist
+            {% else %}
+              <input type="checkbox" name="persist" value="persist"> Persist
+            {% endif -%}
+            </label>
+            <p class="help-block">RDB snapshotting</p>
+          </div>
+          <div class="form-group">
+            <label for="replicas">Replicas</label>
+            <select name="replicas" class="form-control" id="replicas">
+            {%- for replica_count in config['MONACO_REPLICA_OPTIONS'] %}
+            {%- if replica_count == replicas %}
+              <option value="{{ replica_count }}" selected>{{ replica_count }}</option>
+            {% else %}
+              <option value="{{ replica_count }}">{{ replica_count }}</option>
+            {% endif -%}
+            {% endfor -%}
+            </select>
+            <p class="help-block">The number of distinct servers running your db</p>
+          </div>
+          <div class="checkbox">
+            <label>
+            {%- if slavelb %}
+              <input type="checkbox" name="slavelb" value="slavelb" checked="checked"> Slave LB
+            {% else %}
+              <input type="checkbox" name="slavelb" value="slavelb"> Slave LB
+            {% endif -%}
+            </label>
+            <p class="help-block"> Create a loadbalancing config for the cluster slaves?</p>
+          </div>
+          <div class="form-group">
+            <label for="owner">Owner</label>
+            <input type="text" name="owner" class="form-control" id="owner" value="{{ owner }}">
+          </div>
+          <div class="form-group">
+            <label for="operator">Operator</label>
+            <input type="text" name="operator" class="form-control" id="operator" value="{{ operator }}">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="update_button">Update</button>
+      </div>
+    </div>
+  </div>
+</div>

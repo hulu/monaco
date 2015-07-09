@@ -1,0 +1,26 @@
+.app-item {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    cursor: move;
+}
+
+.app-heading {
+    padding-top: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 5px;
+}
+
+.app-cluster {
+    text-align: right;
+}
+
+.node-accept {
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
+
+.node-usage {
+    margin-bottom: 0px;
+}

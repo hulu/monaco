@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block style %}
+<link href="/static/css/admin.css" rel="stylesheet">
+{% endblock %}
+
+{% block modal %}
+{% include "create_node_modal.html" %}
+{% endblock %}
+
+{% block topnav %}
+<li class="active"><a href="">Admin</a></li>
+{% endblock %}
+
+{% block sidenav %}
+<li>
+  <a class="active" href="javascript:void(0);" id="overview-link"><span class="glyphicon glyphicon-dashboard"></span>  Overview</a>
+  <ul class="nav nav-second-level" id="overview-submenu">
+    <li>
+      <a href="javascript:updateLatency();"><span id="latency-refresh" class="glyphicon glyphicon-refresh"></span>  Latency</a>
+    </li>
+    <li>
+      <a href="javascript:updateStatus();"><span id="status-refresh" class="glyphicon glyphicon-refresh"></span>  Status</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="javascript:void(0);" id="nodes-link"><span class="glyphicon glyphicon-th-list"></span>  Nodes</a>
+  <ul class="nav nav-second-level collapse" id="nodes-submenu">
+    <li>
+      <a href="javascript:renderMonacoNodes();"><span class="glyphicon glyphicon-refresh"></span>  refresh</a>
+    </li>
+    <li>
+      <a href="javascript:void(0);" data-toggle="modal" data-target="#create_node_modal"><span class="glyphicon glyphicon-plus-sign"></span>  new node</a>
+    </li>
+  </ul>
+</li>
+{% endblock %}
+
+{% block main %}
+<div id='overview-page' class="row-option">
+  <h4></h4>
+  <div class="col-md-4">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <div class="row">
+          <div class="col-xs-2 hidden-sm hidden-xs panel-icon">
+            <img src="/static/images/dbs-redis.svg" height="68px"></img>
+          </div>
+          <div class="col-xs-10 text-right">
+            <div class="huge">Monaco</div>
+            <div id="latency"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-8">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <div class="row">
+          <div class="col-xs-2 hidden-xs hidden-sm hidden-md panel-icon">
+            <span id="status-glyphicon" class="glyphicon glyphicon-question-sign"></span>
+          </div>
+          <div class="col-xs-10 text-right">
+            <div class="large">Status</div>
+            <div id="short-status">check</div>
+          </div>
+        </div>
+      </div>
+      <div class="panel-body" id="status-output" style="display: none;">
+      </div>
+    </div>
+  </div>
+</div>
+<div id='nodes-page' class="row-option" style="display: none;">
+<div id='monacoloading' class='spinner'>
+  <img src='/static/images/spinner.gif' class='spinner'>
+</div>
+<div id='monacotable' style='display: none'>
+  <h4></h4>
+  <table class='table table-condensed table-hover' style='border-collapse:collapse;' id='monaco-nodes'>
+    <thead>
+      <tr>
+        <th>Node ID</th>
+        <th>Hostname</th>
+        <th>Ram Usage</th>
+        <th>Network IO</th>
+        <th>MGMT Redis Role</th>
+        <th>Syncronization</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script src='/static/js/admin.js'></script>
+{% endblock %}

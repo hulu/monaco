@@ -1,0 +1,184 @@
+{% extends "base.html" %}
+{% block style %}
+<link href="/static/css/prism.css" rel="stylesheet">
+{% endblock %}
+{% block topnav %}
+<li><a href="/dbs">DB</a></li>
+<li class="active"><a href="">{{ name }}</a></li>
+{% endblock %}
+{% block sidenav %}
+<li>
+  <a class="active" href="javascript:void(0);" id="overview-link"><span class="glyphicon glyphicon-th-list"></span>  Overview</a>
+  <ul class="nav nav-second-level" id="overview-submenu">
+    <li>
+      <a href="#" data-toggle="modal" data-target="#update_modal">Settings</a>
+    </li>
+    <li>
+      <a href="javascript:void(0);" id="delete-link">Delete</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="javascript:void(0);" id="metrics-link"><span class="glyphicon glyphicon-dashboard"></span>  Metrics</a>
+  <ul class="nav nav-second-level collapse" id="metrics-submenu">
+    <li>
+      <a href="javascript:void(0);" id="memgraph-link">Memory Use</a>
+    </li>
+    <li>
+      <a href="javascript:void(0);" id="rpsgraph-link">Requests/Second</a>
+    </li>
+    <li>
+      <a href="javascript:void(0);" id="congraph-link">Connections</a>
+    </li>
+    <li>
+      <a href="javascript:void(0);" id="cpugraph-link">CPU Use</a>
+    </li>
+    <li class="divider"></li>
+    <li id='graph-refresh' style='display:none;'>
+      <a href="javascript:void(0);"><span class="glyphicon glyphicon-refresh"></span> Refresh</a>
+    </li>
+    <li id='auto-refresh' class="disabled">
+      <a disabled><span class="glyphicon glyphicon-refresh"></span> Auto-refreshing</a>
+    </li>
+  </ul>
+</li>
+{% endblock %}
+{% block modal %}
+  {% include "update_db_modal.html" %}
+{% endblock %}
+
+{% block main %}
+<div class="row row-option" id="overview-page">
+  <!-- Ownership Panel -->
+  <div class="col-md-4">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <div class="row">
+          <div class="col-xs-2 hidden-sm hidden-xs panel-icon">
+            <img src="/static/images/dbs-redis.svg" height="68px"></img>
+          </div>
+          <div class="col-xs-10 text-right">
+            <div class="huge">{{ name }}</div>
+              <div>{{ owner }}</div>
+              <div>{{ operator }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Stats Panels -->
+  <div class="col-md-8" style="padding:0;">
+    <!-- RPS Panel -->
+    <div class="col-xs-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="row">
+            <div class="col-xs-2 hidden-xs hidden-sm hidden-md panel-icon">
+              <span class="glyphicon glyphicon-stats"></span>
+            </div>
+            <div class="col-xs-10 text-right">
+              <div class="large" id="rps-target">-</div>
+              <div>-</div>
+              <div>RPS</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Connections Panel -->
+    <div class="col-xs-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="row">
+            <div class="col-xs-2 hidden-xs hidden-sm hidden-md panel-icon">
+              <span class="glyphicon glyphicon-transfer"></span>
+            </div>
+            <div class="col-xs-10 text-right">
+              <div class="large" id="connections-target">-</div>
+              <div>-</div>
+              <div>Connections</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Memory Usage Panel -->
+    <div class="col-xs-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="row">
+            <div class="col-xs-2 hidden-xs hidden-sm hidden-md panel-icon">
+              <span class="glyphicon glyphicon-hdd"></span>
+            </div>
+            <div class="col-xs-10 text-right">
+              <div class="large" id="memory-target">-</div>
+              <div>-</div>
+              <div>Memory Usage</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Instructions -->
+  <div class="col-md-12">
+    <div class="huge">Usage</div>
+    <pre><code class="language-python">#!/usr/bin/python
+from redis import StrictRedis
+
+client = StrictRedis('{{ config.MONACO_DB }}', {{ app_id }})</code></pre>
+  </div>
+{% if slavelb %}
+  <!-- Slave LB Instructions -->
+  <div class="col-md-12">
+    <div class="huge">Slave LB Usage</div>
+    <pre><code class="language-python">#!/usr/bin/python
+from redis import StrictRedis
+# Use for reads ONLY
+client = StrictRedis('{{ config.MONACO_SLAVE_DB }}', {{ app_id }})</code></pre>
+  </div>
+{% endif %}
+  <!-- Cluster Info -->
+  <div class="col-md-12">
+    <div class='huge'>Cluster</div>
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th>Role</th>
+          <th>Host</th>
+          <th>Port</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Master</td>
+          <td>{{master['host']}}</td>
+          <td>{{master['port']}}</td>
+        </tr>
+        {% for s in slave %}
+        <tr>
+          <td>Slave</td>
+          <td>{{s['host']}}</td>
+          <td>{{s['port']}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+<!-- Overview Row -->
+
+<!-- Graph section -->
+<div class="row row-option" style="display:none;" id="metrics-page">
+  <div class="col-md-12" id="db-metrics">
+    {% include "db_stats_redis.html" %}
+  </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="/static/js/prism.js"></script>
+<script src="/static/js/update_db.js"></script>
+<script src="/static/js/db.js"></script>
+s
+{% endblock %}

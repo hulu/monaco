@@ -1,0 +1,74 @@
+<!-- A stub that injects the pop-up style create dialogue -->
+<div class="modal fade" id="create_modal" tabindex="-1" role="dialog" aria-labelledby="create_modal_label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="create_modal_label">Create DB</h4>
+      </div>
+      <div class="modal-body">
+        <form action="#" role="form" id="create_form">
+          <div class="form-group">
+            <label for="name">App Name</label>
+            <input type="text" name="name" class="form-control" id="name" placeholder="Enter app name">
+          </div>
+          <div class="form-group">
+            <label for="maxmemory">Size</label>
+            <select name="maxmemory" class="form-control" id="maxmemory">
+            {%- for size, value in config['MONACO_MAXMEMORY_OPTIONS'].iteritems() %}
+              <option value="{{ value }}">{{ size }}</option>
+            {%- endfor %}
+            </select>
+            <p class="help-block">Please try to avoid over-allocating!<br>Downsizing later will restart your instance, whereas increasing is seamless, so start small</p>
+          </div>
+          <div class="form-group">
+            <label for="maxmemory_policy">Memory Policy</label>
+            <select name="maxmemory_policy" class="form-control" id="maxmemory_policy">
+            {%- for policy in config['MONACO_MAXMEMORY_POLICY_OPTIONS'] %}
+              <option value="{{ policy }}">{{policy}}</option>
+            {%- endfor %}
+            </select>
+            <p class="help-block">For more info on memory policies, see the commented <a href="http://download.redis.io/redis-stable/redis.conf">redis.conf</a></p>
+          </div>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" name="persist" value="persist"> Persist
+            </label>
+            <p class="help-block">RDB snapshotting</p>
+          </div>
+          <div class="form-group">
+            <label for="replicas">Cluster Size</label>
+            <select name="replicas" class="form-control" id="replicas">
+            {%- for replica_count in config['MONACO_REPLICA_OPTIONS'] %}
+              <option value="{{ replica_count }}">{{ replica_count }}</option>
+            {%- endfor %}
+            </select>
+            <p class="help-block">The number of distinct servers running your db</p>
+          </div>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" name="slavelb" value="slavelb"> Slave LB
+            </label>
+            <p class="help-block">Creates a loadbalancing config for the Slaves in your cluster</p>
+          </div>
+          <div class="form-group">
+            <label for="owner">Owner</label>
+            <input type="text" name="owner" value="{{username}}" class="form-control" id="owner">
+          </div>
+          <div class="form-group">
+            <label for="operator">Operator</label>
+            <select name="operator" class="form-control" id="operator">
+            {%- for group in groups %}
+              <option value="{{group}}">{{group}}</option>
+            {%- endfor %}
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="create_button">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>

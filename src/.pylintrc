@@ -1,0 +1,29 @@
+[MESSAGES CONTROL]
+# R0902 - too many instance attributes
+# RO903 - too few public methods
+# R0904 - too many public methods
+# R0912 - too many branches
+# R0915 - too many statements
+# WO102 - Dangerous default value
+# W0141 - used builtin map :|
+# W0142 - used * or ** 'magic' :|
+# W0201 - attribute defined outside init :|
+# W0703 - catching too general exception FIXME
+disable = R0902, R0903, R0904, R0912, R0915, W0102, W0141, W0142, W0201, W0703
+
+[BASIC]
+# _ is used as-in GO where I don't use the var
+# r = redis always always always
+# k,v = iteritems()
+# na,np,va,vi,ti = paxos state vars
+# application = wsgi modules for donki
+good-names=_,r,k,v,na,np,va,vi,ti,application
+
+[FORMAT]
+# gone are line editors.. in are 4k displays.. get over it pylint
+max-line-length = 200
+
+[TYPECHECK]
+# zmq module has some namespace sourcery that pylint is not even ready for.
+ignored-modules = zmq, schema
+ignored-classes = App, Monaco, MonacoNode, MonacoTwem

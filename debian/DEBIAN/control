@@ -1,0 +1,12 @@
+Package: Monaco
+Version: 1.0-1
+Section: base
+Priority: optional
+Architecture: all
+Depends: redis-server, python-pip, build-essential, python-dev, libzmq3, libzmq3-dev
+Maintainer: Keith Ainsworth <keith.ainsworth@hulu.com>
+Description: Monaco
+ This provides a redis clustering service.
+ Monaco manages a cluster, allocating redis-servers for user exposure
+ There is extensive configuration, and deployment flexibility. For up to date documentation:
+ https://github.com/hulu/monaco/README.md

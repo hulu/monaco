@@ -1,0 +1,2 @@
+monaco ALL=(ALL) NOPASSWD: /sbin/start monaco-db *, /sbin/stop monaco-db *, /sbin/restart monaco-db *, /sbin/status monaco-db *
+monaco ALL=(ALL) NOPASSWD: /sbin/start nutcracker *, /sbin/stop nutcracker *, /sbin/restart nutcracker *, /sbin/status nutcracker *

@@ -1,0 +1,22 @@
+<div class="row" id="graphdiv">
+<!-- Client Connections -->
+  <div class='col-md-12' id="congraph">
+    <a href='http://devops-graphite.prod.hulu.com/composer/?width=1024&height=600&target=*{{client_connections}}'>
+      <img src='http://devops-graphite.prod.hulu.com/render/?width=1024&height=600&template=plain&title=Client%20Connections&target=*{{client_connections}}&vtitle=Clients' class='img-responsive graph-img'/>
+    </a>
+  </div>
+
+<!-- Forward Errors -->
+  <div class='col-md-12' id="fegraph">
+    <a href='http://devops-graphite.prod.hulu.com/composer/?width=1024&height=600&target=*{{forward_error}}'>
+      <img src='http://devops-graphite.prod.hulu.com/render/?width=1024&height=600&template=plain&title=Forward%20Errors&target=*{{forward_error}}&vtitle=Errors' class='img-responsive graph-img'/>
+    </a>
+  </div>
+
+<!-- Client Errors  -->
+  <div class='col-md-12' id="cegraph">
+    <a href='http://devops-graphite.prod.hulu.com/composer/?width=1024&height=600&target=*{{client_err}}'>
+      <img src='http://devops-graphite.prod.hulu.com/render/?width=1024&height=600&template=plain&title=Client%20Errors&target=*{{client_err}}&vtitle=Errors' class='img-responsive graph-img'/>
+    </a>
+  </div>
+</div>

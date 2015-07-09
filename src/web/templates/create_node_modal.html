@@ -1,0 +1,48 @@
+<!-- A stub that injects the pop-up style create dialogue -->
+<div class="modal fade" id="create_node_modal" tabindex="-1" role="dialog" aria-labelledby="create_modal_label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="create_modal_label">New Monaco Node</h4>
+      </div>
+      <div class="modal-body">
+        <form action="/api/nodes" method="post" class="form" role="form" id="create_form">
+          <!-- TODO: Selectize. List in blocked subgroup existing node IDs. On input verify availability -->
+          <div class="form-group">
+            <label for="node_id">Node ID</label>
+            <select name="node_id" class="form-control" id="node_id">
+            </select>
+            <p class="help-block">Enter an unused Node ID (click to see used)</p>
+          </div>
+          <label for="fullhost">Hostname</label>
+          <div class="form-row" id="fullhost">
+            <div class="form-inline">
+              <input type="text" name="hostname" size="20" class="form-control" id="hostname" placeholder="hostname">
+              <!-- TODO: Selectize to block off this select -->
+              <input type="text" name="FQDN" class="form-control" id="FQDN" placeholder=".site.com">
+              <p class="help-block">Enter the FQDN on an acceptable subdomain</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="rack">Rack</label>
+            <input type="text" name="rack" class="form-control" id="rack">
+            <p class="help-block">This doesn't have to relate to a physical rack, however should be considered as an "allocation unit" during App creation. Monaco will try to have no more than 1 redis-server per "rack"</p>
+          </div>
+          <div class="form-group">
+            <label for="total_memory">Total Memory</label>
+            <!-- TODO: Selectize to validate input -->
+            <select name="total_memory" class="form-control" id="total_memory">
+            </select>
+            <p class="help-block">Total Memory to allocate Monaco DB's to (in MB)</p>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <!-- TODO: JS: on submit, FQDN = hostname + FQDN; and create API -->
+        <button type="button" class="btn btn-primary" id="create_button">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>

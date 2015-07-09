@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+
+{% block style %}
+<link href="/static/css/node.css" rel="stylesheet">
+{% endblock %}
+
+{% block topnav %}
+<li><a href="/admin">Admin</a></li>
+<li><a href="javascript:void(0);">Nodes</a></li>
+<li class="active"><a href="#">{{ node_id }}</a></li>
+{% endblock %}
+
+{% block modal %}
+  {% include "migrate_modal.html" %}
+{% endblock %}
+
+{% block sidenav %}
+<li>
+  <a class="active" href="javascript:void(0);" id="node-info-link"><span class="glyphicon glyphicon-th-list"></span>  Info</a>
+</li>
+<li>
+  <a href="javascript:void(0);" id="allocation-link"><span class="glyphicon glyphicon-tasks"></span>  Allocation</a>
+</li>
+{% endblock %}
+
+{% block main %}
+<div class="row row-option" id="node-info-tab">
+  <!-- Node Info -->
+  <div class="col-md-12 huge">Info</div>
+  <div class="col-md-6">
+    <h4>Node Info</h4>
+    <form action="javascript:void(0);" role="form" id="node-info-form">
+      <div class="form-group">
+        <label for="hostname">Hostname</label>
+        <input type="text" name="hostname" class="form-control" id="hostname" value="{{ hostname }}" readonly>
+      </div>
+      <div class="form-group">
+        <label for="node_id">Node ID</label>
+        <input type="text" name="node_id" class="form-control" id="node_id" value="{{ node_id }}" readonly>
+      </div>
+      <div class="form-group">
+        <label for="FQDN">FQDN</label>
+        <input type="text" name="FQDN" class="form-control" id="FQDN" value="{{ FQDN }}" readonly>
+      </div>
+      <div class="form-group">
+        <label for="total_memory">Total RAM</label>
+        <input type="text" name="total_memory" class="form-control" id="total_memory" value="{{ total_memory }}">
+      </div>
+      <div class="form-group">
+        <label for="rack">Rack Identifier</label>
+        <input type="text" name="rack" class="form-control" id="rack" value="{{ rack }}">
+        <p class="help-block">This doesn't have to relate to a physical rack, however should be considered as an "allocation unit" during App creation. Monaco will try to have no more than 1 redis-server per "rack"</p>
+      </div>
+      <button type="submit" class="btn btn-default" id="node-form-button"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate" id="node-form-spinner" style="display: none;"></span>  Submit</button>
+    </form>
+  </div>
+  <div class="col-md-6">
+    <h4>Usage Info</h4>
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th>Server Role</th>
+          <th>Instances</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Redis Master</td>
+          <td>{{ master_servers }}</td>
+        </tr>
+        <tr>
+          <td>Redis Slave</td>
+          <td>{{ slave_servers }}</td>
+        </tr>
+        <tr>
+          <td>Twemproxies</td>
+          <td>{{ twemproxy_servers }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <h4>RAM Allocation</h4>
+    <div class="progress">
+      <div class="progress-bar" role="progressbar" aria-valuenow="{{ memory }}" aria-valuemin="0" aria-valuemax="{{ total_memory }}" style="width: {{ memory_percent }}%;">
+        <span>{{ memory_percent }}%</span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row row-option" id="allocation-tab" style="display: none;">
+  <div class="col-md-4">
+    <h4>User shards:</h4>
+    <div id="app-list-loading" style="display: none;">
+      <img src='/static/images/spinner.gif' class='spinner'>
+    </div>
+    <div id="app-list">
+      <div class="well well-sm" id="master-well">
+{%- for app_id in masters %}
+      <div class="panel panel-default app-item" id="app-{{ app_id }}" app_id="{{ app_id }}">
+        <div class="panel-heading app-heading">
+          <div class="row">
+            <div class="col-xs-3 app-col">
+              <a href="/app/{{ app_id }}">{{ app_id }}</a>
+            </div>
+            <div class="col-xs-2" id="app-{{ app_id }}-size">
+            </div>
+            <div class="col-xs-7 app-cluster" id="app-{{ app_id }}-cluster">
+            </div>
+          </div>
+        </div>
+      </div>
+{%- endfor %}
+      </div>
+      <div class="well well-sm" id="slave-well">
+{%- for app_id in slaves %}
+      <div class="panel panel-default app-item" id="app-{{ app_id }}" app_id="{{ app_id }}">
+        <div class="panel-heading">
+          <div class="row">
+            <div class="col-xs-3">
+              <a href="/app/{{ app_id }}">{{ app_id }}</a>
+            </div>
+            <div class="col-xs-2" id="app-{{ app_id }}-size">
+            </div>
+            <div class="col-xs-7 app-cluster" id="app-{{ app_id }}-cluster">
+            </div>
+          </div>
+        </div>
+      </div>
+{%- endfor %}
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 col-md-offset-1" id="node-list">
+{% for n_id in nodes %}
+{% if n_id != node_id %}
+    <div class="well well-sm node-item" id="node-{{ n_id }}" node_id="{{ n_id }}">
+      <div class="row">
+        <div class="col-xs-2"><a href="/node/{{ n_id }}">Node {{ n_id }}</a></div>
+        <div class="col-xs-6">
+          <div class="progress node-usage">
+            <div class="progress-bar" role="progressbar" id="node-{{ n_id }}-usage"></div>
+          </div>
+        </div>
+        <div class="col-xs-2" id="node-{{ n_id }}-masters"></div>
+        <div class="col-xs-2" id="node-{{ n_id }}-slaves"></div>
+      </div>
+    </div>
+{% endif %}
+{% endfor %}
+  </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="/static/js/node.js"></script>
+{% endblock %}
