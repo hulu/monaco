@@ -43,4 +43,4 @@ Currently a work in progress- but you can install from a locally built package a
 ## Contact
 #### Keith Ainsworth/Hulu
 * e-mail: <keith@hulu.com>
-* [Hulu](https://www.hulu.com)
+* [Hulu](http://www.hulu.com)
