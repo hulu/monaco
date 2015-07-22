@@ -6,22 +6,27 @@
 
 
 ## Installation
-Currently a work in progress- but you can install from a locally built package as described below
+On Ubuntu precise:
 ```
-    $ sudo apt-add-repository -ppa:hulu-
+    $ sudo apt-add-repository -ppa:hulu-tech/ppa
     $ sudo apt-get update
     $ sudo apt-get install monaco
+```
+On other Debian builds
+```
+    $ git clone https://github.com/hulu/monaco
+    $ cd monaco
+    $ sudo dpkg -i Monaco_1.1.deb
 ```
 ## Download
 * I recommend you install via package (see above)
 * [Latest Release](https://github.com/hulu/monaco/archive/master.zip)
 * Installing from source:
-
 ```
     $ wget https://github.com/hulu/monaco/archive/master.zip
     $ unzip master.zip && cd master
-    $ sudo ./ubuntupkg.sh
-    $ dpkg -i Monaco_1.0-1.deb
+    $ ./ubuntupkg.sh
+    $ sudo dpkg -i Monaco_1.1.deb
 ```
 
 ## Contributors
