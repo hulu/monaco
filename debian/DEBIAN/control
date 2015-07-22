@@ -1,7 +1,7 @@
-Package: Monaco
-Version: 1.0-1
-Section: base
-Priority: optional
+Package: monaco
+Version: 1.1
+Section: web
+Priority: low
 Architecture: all
 Depends: redis-server, python-pip, build-essential, python-dev, libzmq3, libzmq3-dev
 Maintainer: Keith Ainsworth <keith.ainsworth@hulu.com>
