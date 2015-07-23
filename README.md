@@ -38,7 +38,7 @@ On other Debian builds
 * see [LICENSE](https://github.com/hulu/monaco/blob/master/LICENSE.md) file
 
 ## Version 
-* Version 1.0-1
+* Version 1.1
   * Initial Release!
 
 ## Usage
