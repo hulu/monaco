@@ -121,7 +121,10 @@ def monaco():
                     logger.debug('Assigning self as slaveof %s:6379', master_tup[0])
                     r.slaveof(host=master_tup[0], port=config.config['mgmt_port'])
         except Exception:
-            r = redis.StrictRedis(port=config.config['mgmt_port'])
+            try:
+                r = redis.StrictRedis(port=config.config['mgmt_port'])
+            except Exception:
+                logger.exception("Can't connect to mgmt db!")
 
 if __name__ == '__main__':
     monaco()
