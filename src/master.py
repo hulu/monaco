@@ -300,7 +300,7 @@ Thanks for your understanding''' % (thisapp.master, best_slave, thisapp.app_id),
             if node.hostname == self.hostname:
                 continue
             try:
-                nodecli = redis.StrictRedis(host=node.hostname, port=config['mgmt_port'], socket_connect_timeout=2)
+                nodecli = redis.StrictRedis(host=node.hostname, port=config['mgmt_port'], socket_connect_timeout=1, socket_timeout=1)
                 nodecli.info()
                 self.monaco.node_up(node_id, self.r)
                 self.logger.debug('Node %s is healthy', node_id)
